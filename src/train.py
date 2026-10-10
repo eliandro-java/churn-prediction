@@ -1,5 +1,7 @@
 
 import pandas as pd
+import joblib
+
 from pathlib import Path
 
 from sklearn.model_selection import train_test_split
@@ -40,6 +42,15 @@ def main():
 
     # 5. Treinar
     modelo.fit(X_treino, y_treino)
+
+    # Salvar o modelo treinado
+    PASTA_MODELOS = BASE_DIR / "models"
+    PASTA_MODELOS.mkdir(parents=True, exist_ok=True)
+
+    CAMINHO_MODELO = PASTA_MODELOS / "modelo_churn.joblib"
+    joblib.dump(modelo, CAMINHO_MODELO)
+
+    print(f"\nModelo salvo em: {CAMINHO_MODELO}")
 
     # 6. Avaliar
     previsoes = modelo.predict(X_teste)
